@@ -11,6 +11,10 @@ while True:
 
 # Regex patterns
 year_pattern = r"\b(19|20)\d{2}\b"
+website_pattern = r"(?:www\.|http[s]?://)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"  # Detects website patterns
+
+# Allowed video file extensions
+video_extensions = {".mkv", ".mp4", ".avi", ".m4v", ".webm", ".mov", ".wmv", ".flv"}
 
 # Categorizing allowed tags
 video_codecs = {
@@ -24,10 +28,44 @@ movie_versions = {
     "director['’]s cut": "Director’s Cut", "final cut": "Final Cut", "remastered": "Remastered"
 }
 
+def check_for_executables(directory):
+    """Checks for .exe files and prompts the user to delete them."""
+    exe_files = list(Path(directory).rglob("*.exe"))
+    if exe_files:
+        print("\n⚠️ WARNING: Executable files detected in your movie folders!\n")
+        for exe in exe_files:
+            while True:
+                user_input = input(f"Found: {exe}\nDelete this file? (Y/N/Q to quit): ").strip().lower()
+                if user_input == "y":
+                    try:
+                        os.remove(exe)
+                        print(f"🗑️ Deleted: {exe}")
+                    except Exception as e:
+                        print(f"❌ Error deleting {exe}: {e}")
+                    break
+                elif user_input == "n":
+                    print(f"⏩ Skipped: {exe}")
+                    break
+                elif user_input == "q":
+                    print("🚪 Exiting script.")
+                    exit()
+                else:
+                    print("Invalid input. Please enter 'Y' to delete, 'N' to keep, or 'Q' to quit.")
+
 def normalize_movie_name(original_name):
+    # Remove website references
+    original_name = re.sub(website_pattern, "", original_name).strip()
+    
+    # Remove leading/trailing hyphens
+    original_name = re.sub(r"^[- ]+|[- ]+$", "", original_name).strip()
+
     # Extract year
     year_match = re.search(year_pattern, original_name)
     year = year_match.group(0) if year_match else ""
+
+    # Extract resolution
+    resolution_match = re.search(r"(1080p|720p|2160p|480p)", original_name, re.IGNORECASE)
+    resolution = f"[{resolution_match.group(0)}]" if resolution_match else ""
 
     # Extract video codec
     video_codec = next((f"[{video_codecs[tag]}]" for tag in video_codecs if re.search(rf"\b{tag}\b", original_name, re.IGNORECASE)), "")
@@ -39,14 +77,23 @@ def normalize_movie_name(original_name):
     version_tags = [f"[{movie_versions[tag]}]" for tag in movie_versions if re.search(rf"\b{tag}\b", original_name, re.IGNORECASE)]
     movie_version = " ".join(version_tags)
 
-    # Remove unnecessary parts and reformat the name
-    clean_name = re.sub(r"[\.\-_]", " ", original_name)  # Replace dots, underscores, dashes with spaces
-    clean_name = re.sub(rf"{year_pattern}.*", "", clean_name).strip()  # Remove everything after the year
-    clean_name = re.sub(r"\s+", " ", clean_name)  # Normalize spaces
+    # Remove unnecessary characters (dots, underscores, dashes)
+    clean_name = re.sub(r"[\._-]", " ", original_name).strip()
 
-    # Construct new directory name
-    new_name = f"{clean_name} ({year}) {video_codec} {audio_encoding} {movie_version}".strip()
-    return re.sub(r"\s+", " ", new_name)  # Remove extra spaces
+    # Ensure we don't delete part of the title after the year
+    if year:
+        clean_name = re.sub(rf"\s*\(?\b{year}\b.*", "", clean_name).strip()
+
+    # Construct final directory name in the correct order
+    new_name = f"{clean_name} ({year}) {movie_version} {resolution} {video_codec} {audio_encoding}".strip()
+    
+    # Ensure clean formatting (e.g., remove double spaces)
+    new_name = re.sub(r"\s+", " ", new_name)
+
+    return new_name
+
+# Check for executable files before processing
+check_for_executables(movie_directory)
 
 # Process directories with user approval
 for dir_name in os.listdir(movie_directory):
@@ -58,7 +105,7 @@ for dir_name in os.listdir(movie_directory):
         if dir_path != new_path:
             # Prompt user for confirmation
             while True:
-                user_input = input(f"\nRename: {dir_name}\n   → {new_name}\nApprove? (Y/N/Q to quit): ").strip().lower()
+                user_input = input(f"\nRename: {dir_name}\n   → {new_name}\nApprove? (Y/N/S/Q to quit): ").strip().lower()
                 
                 if user_input == "y":  # Rename if approved
                     try:
@@ -72,9 +119,16 @@ for dir_name in os.listdir(movie_directory):
                     print(f"⏩ Skipped: {dir_name}")
                     break
                 
+                elif user_input == "s":  # Skip renaming without logging
+                    break
+                
                 elif user_input == "q":  # Quit script
                     print("🚪 Exiting script.")
                     exit()
                 
+                # elif user_input == "a":  # Uncomment to add 'Approve All' functionality
+                #     auto_approve = True
+                #     break
+                
                 else:
-                    print("Invalid input. Please enter 'Y' to approve, 'N' to skip, or 'Q' to quit.")
+                    print("Invalid input. Please enter 'Y' to approve, 'N' to skip, 'S' to silently skip, or 'Q' to quit.")

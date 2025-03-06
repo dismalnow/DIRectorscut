@@ -1,40 +1,52 @@
 # DIRector Cut 🎬
 
-🚀 **DIRectorscut_v1.py** is a script that **renames movie directories** into a clean and standardized format.  
-It ensures your collection's directories follow a sane naming convention structure like:
+🚀 **DIRectorscut_v2.py** is a Python script that **renames movie directories** into a clean and standardized format.  
+It ensures your collection follows a proper naming convention:
 
-Movie Title (Year) [video codec] [audio encoding] [movie version]
+Movie Title (Year) [movie version] [resolution] [video codec] [audio encoding] 
 
 ## 🛠 Features
-- Prompts for approval before renaming.
-- Extracts key details: **Title, Year, Codec, Audio Format, Version (Unrated, Extended, etc.).**
-- Skips unnecessary clutter like `[BluRay]`, `[WEBRip]`, `[YTS]`, etc.
-- **Asks the user for the movie directory** instead of hardcoding it.
-- Keeps your library **organized and beautiful**.
+- **Removes website references** (e.g., `www.Torrenting.com -`).
+- **Prompts for approval** before renaming.
+- **Skip (S) Option** – Skip renaming without logging.
+- **Supports common video/audio formats** like `[x265]`, `[DTS]`, `[TrueHD]`.
+- **Handles multiple movie versions** like `[Unrated]`, `[Extended]`, `[Director’s Cut]`.
+- **"Approve All" (A) feature** – Includes commented-out "Approve All" (`A`) feature.
 
-## 📌 Example
+## 🚨 Executable File Warning
+Before renaming, **DIRectorscut_v2.py** scans for **.exe files** inside your movie directories.  
+If found, you will be prompted to **delete or keep each one manually**.  
+
+**Example Warning:**
+Found: X:\Movies\DangerousFile.exe Delete this file? (Y/N/Q to quit)
+
+You can choose to:
+- **(Y)** Delete the file.
+- **(N)** Keep the file.
+- **(Q)** Quit the script immediately.
+
+This prevents **potential malware or unnecessary executables** from staying in your collection.
+
+## 📌 Example Renaming
 **Before:**  
-Henry And Kitel Run From Kailoon Bay (2008) Unrated 1080p BluRay x264 English AC3 5.1 - BeAvIs  
-
+www.web-site.poop - Mervie (1988) EXTENDED 1080p BluRay 5.1-DuDu
 **After:**  
-Henry And Kitel Run From Kailoon Bay (2008) [x264] [AC3] [Unrated]
+Mervie (1988) [Extended] [1080p] [5.1]
 
 ## 🔧 Installation & Usage
 1. **Clone this repo**:  
    ```bash
    git clone https://github.com/YOUR-USERNAME/DIRectorscut.git
    cd DIRectorscut
-2. **Run the script**:  
+2. **Run the script**:
    ```bash
-   python DIRectorscut_v1.py
+   python DIRectorscut_v2.py
 3. **Enter the path to your movie directory and approve each rename.**
 
 ## 🔖 License
 DIRector Cut is released under the MIT License – feel free to use, modify, and share!
 
 MIT License
-
-Copyright (c) 2024
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,13 +55,6 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
