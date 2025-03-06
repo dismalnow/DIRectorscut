@@ -2,8 +2,12 @@ import os
 import re
 from pathlib import Path
 
-# Define the movie directory path
-movie_directory = r"V:\Downloads\New Vids\Movies"
+# Ask the user for the movie directory
+while True:
+    movie_directory = input("Enter the path to your movie directory: ").strip()
+    if os.path.isdir(movie_directory):
+        break
+    print("❌ Invalid directory. Please enter a valid path.")
 
 # Regex patterns
 year_pattern = r"\b(19|20)\d{2}\b"
@@ -16,7 +20,7 @@ audio_encodings = {
     "dts": "DTS", "aac": "AAC", "ac3": "AC3", "dts-hd": "DTS-HD", "truehd": "TrueHD", "5.1": "5.1", "7.1": "7.1"
 }
 movie_versions = {
-    "unrated": "Unrated", "extended": "Extended", "redux": "Redux", 
+    "unrated": "Unrated", "extended": "Extended", "redux": "Redux",
     "director['’]s cut": "Director’s Cut", "final cut": "Final Cut", "remastered": "Remastered"
 }
 
@@ -31,7 +35,7 @@ def normalize_movie_name(original_name):
     # Extract audio encoding
     audio_encoding = next((f"[{audio_encodings[tag]}]" for tag in audio_encodings if re.search(rf"\b{tag}\b", original_name, re.IGNORECASE)), "")
 
-    # Extract movie version (prioritizing common ones)
+    # Extract movie version
     version_tags = [f"[{movie_versions[tag]}]" for tag in movie_versions if re.search(rf"\b{tag}\b", original_name, re.IGNORECASE)]
     movie_version = " ".join(version_tags)
 

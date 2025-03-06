@@ -1,38 +1,37 @@
 # DIRector Cut 🎬
 
-🚀 **DIRector_cut.py** is a script that **renames movie directories** into a clean and standardized format.  
-It ensures your collection follows a proper structure like:
+🚀 **DIRectorscut_v1.py** is a script that **renames movie directories** into a clean and standardized format.  
+It ensures your collection's directories follow a sane naming convention structure like:
 
 Movie Title (Year) [video codec] [audio encoding] [movie version]
 
-### 🛠 Features
+## 🛠 Features
 - Prompts for approval before renaming.
 - Extracts key details: **Title, Year, Codec, Audio Format, Version (Unrated, Extended, etc.).**
 - Skips unnecessary clutter like `[BluRay]`, `[WEBRip]`, `[YTS]`, etc.
+- **Asks the user for the movie directory** instead of hardcoding it.
 - Keeps your library **organized and beautiful**.
 
-### 📌 Example
-Before:
-Henry And Kitel Run From Kailoon Bay (2008) Unrated 1080p BluRay x264 English AC3 5.1 - BeAvIs
+## 📌 Example
+**Before:**  
+Henry And Kitel Run From Kailoon Bay (2008) Unrated 1080p BluRay x264 English AC3 5.1 - BeAvIs  
 
-After:
+**After:**  
 Henry And Kitel Run From Kailoon Bay (2008) [x264] [AC3] [Unrated]
 
-### 🔧 Installation
-1. **Clone this repo**:
+## 🔧 Installation & Usage
+1. **Clone this repo**:  
    ```bash
-   git clone https://github.com/YOUR-USERNAME/DIRector_cut.git
-   cd DIRector_cut
-2. **Run the script**:
+   git clone https://github.com/YOUR-USERNAME/DIRectorscut.git
+   cd DIRectorscut
+2. **Run the script**:  
    ```bash
-    python DIRector_cut.py
+   python DIRectorscut_v1.py
+3. **Enter the path to your movie directory and approve each rename.**
 
----
-
-### **`LICENSE`** (MIT License)
+## 🔖 License
 DIRector Cut is released under the MIT License – feel free to use, modify, and share!
 
-```txt
 MIT License
 
 Copyright (c) 2024
