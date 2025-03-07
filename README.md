@@ -1,60 +1,74 @@
-# DIRector Cut 🎬
+# DirectorsCut V2
 
-🚀 **DIRectorscut_v2.py** is a Python script that **renames movie directories** into a clean and standardized format.  
-It ensures your collection follows a proper naming convention:
+## Overview
+DirectorsCut V2 is a Python script that automates the extraction of metadata from movie files in a specified directory. It utilizes FFmpeg's `ffprobe` to gather video codec, audio codec, resolution, and audio channel information. The script also offers an option to generate a structured report in CSV format.
 
-Movie Title (Year) [movie version] [resolution] [video codec] [audio encoding] 
+## Features
+- Recursively scans a movie directory to locate main movie files
+- Extracts metadata including:
+  - Video codec
+  - Audio codec
+  - Resolution
+  - Audio channels
+- Supports multiple video formats (`.mkv`, `.mp4`, `.avi`, `.m4v`, `.webm`, `.mov`, `.wmv`, `.flv`)
+- Provides an option to generate a report (CSV) of all processed movie files
+- Saves the report to a user-specified location (defaults to the `Movies/` directory)
 
-## 🛠 Features
-- **Removes website references** (e.g., `www.Torrenting.com -`).
-- **Prompts for approval** before renaming.
-- **Skip (S) Option** – Skip renaming without logging.
-- **Supports common video/audio formats** like `[x265]`, `[DTS]`, `[TrueHD]`.
-- **Handles multiple movie versions** like `[Unrated]`, `[Extended]`, `[Director’s Cut]`.
-- **"Approve All" (A) feature** – Includes commented-out "Approve All" (`A`) feature.
+## Prerequisites
+Ensure you have the following installed before running the script:
 
-## 🚨 Executable File Warning
-Before renaming, **DIRectorscut_v2.py** scans for **.exe files** inside your movie directories.  
-If found, you will be prompted to **delete or keep each one manually**.  
+- **Python 3.7+**
+- **FFmpeg** (with `ffprobe` accessible from the command line)
+  - [Download FFmpeg](https://ffmpeg.org/download.html)
+  - Ensure it's added to your system `PATH`
 
-**Example Warning:**
-Found: X:\Movies\DangerousFile.exe Delete this file? (Y/N/Q to quit)
+## Installation
+1. Clone this repository:
+   ```sh
+   git clone https://github.com/yourusername/directorscut-v2.git
+   cd directorscut-v2
+   ```
+2. Install dependencies (if any required in the future):
+   ```sh
+   pip install -r requirements.txt  # Currently, no external dependencies
+   ```
 
-You can choose to:
-- **(Y)** Delete the file.
-- **(N)** Keep the file.
-- **(Q)** Quit the script immediately.
+## Usage
+Run the script with:
+```sh
+python directorscut_v2.py
+```
 
-This prevents **potential malware or unnecessary executables** from staying in your collection.
+### Steps:
+1. Enter the path to your movie directory.
+2. The script will automatically detect and analyze movie files.
+3. You will be prompted whether to generate a metadata report (`Y/N`).
+4. If `Y`, specify the save location (defaults to `Movies/report.csv`).
+5. The script processes each movie file, displaying extracted metadata.
+6. If a report is generated, it is saved in the specified location.
 
-## 📌 Example Renaming
-**Before:**  
-www.web-site.poop - Mervie (1988) EXTENDED 1080p BluRay 5.1-DuDu
-**After:**  
-Mervie (1988) [Extended] [1080p] [5.1]
+## Example Output
+```plaintext
+Enter the path to your movie directory: V:\Downloads\New Vids\Movies
+📂 Selected main movie file: V:\Downloads\New Vids\Movies\Big Daddy (1999) [1080p] [x264] [DTS]\Big Daddy (1999).mkv
+Extracted metadata for Big Daddy (1999).mkv:
+  - Video Codec: [H.264]
+  - Audio Codec: [DTS]
+  - Resolution: [1920x1040]
+  - Audio Channels: [6.1]
+Do you want to generate a report? (Y/N): Y
+Enter the path to save the report (default: Movies/report.csv):
+✅ Report saved to Movies/report.csv
+```
 
-## 🔧 Installation & Usage
-1. **Clone this repo**:  
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/DIRectorscut.git
-   cd DIRectorscut
-2. **Run the script**:
-   ```bash
-   python DIRectorscut_v2.py
-3. **Enter the path to your movie directory and approve each rename.**
+## Future Enhancements
+- Support for additional metadata fields (e.g., bitrate, framerate)
+- JSON report option
+- GUI version for easier interaction
+- Multi-threaded processing for large directories
 
-## 🔖 License
-DIRector Cut is released under the MIT License – feel free to use, modify, and share!
+## License
+This project is licensed under the MIT License.
 
-MIT License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+## Contributing
+Feel free to submit pull requests or open issues for any bugs, feature requests, or improvements!

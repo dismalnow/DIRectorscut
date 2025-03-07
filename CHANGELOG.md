@@ -1,19 +1,34 @@
-# Change Log
+# Changelog
 
-## [v1.0] - YYYY-MM-DD
+All notable changes to this project will be documented in this file.
+
+## [Unreleased]
+- Planned improvements and feature enhancements.
+
+## [1.0.0] - 2025-03-06
 ### Added
-- Implemented directory renaming with `[resolution] [codec] [audio] [version]` format.
-- Allowed user approval for renaming (`Y/N/Q`).
-- Added `.exe` file detection and removal prompt.
+- Initial release of the movie metadata extraction script.
+- Directory traversal to find the main movie file in each folder.
+- Extraction of video codec, audio codec, resolution, and audio channels using `ffprobe`.
+- Standardization of extracted metadata for consistency.
+- Support for multiple video formats: `.mkv`, `.mp4`, `.avi`, `.m4v`, `.webm`, `.mov`, `.wmv`, `.flv`.
+- Option to generate a report in CSV format containing extracted metadata.
+- User-defined report save location with a default to the `Movies` directory.
 
 ### Fixed
-- Resolved missing `[1080p]` resolution in names.
-- Improved regex handling of unwanted website names.
+- Addressed FFmpeg installation issues to ensure smooth metadata extraction.
+- Improved error handling for missing files and invalid directories.
+
+### Changed
+- Optimized the method for identifying the primary movie file in each directory.
+
+## [0.9.0] - 2025-03-05
+### Added
+- Initial implementation of the script with basic directory traversal and FFmpeg metadata extraction.
+
+### Fixed
+- Debugging and validation of extracted metadata.
 
 ---
 
-## [v2.0] - In Progress
-### Planned
-- Extract metadata directly from movie files.
-- Introduce GUI for easier renaming.
-- Improve auto-approval functionality.
+**Note:** Version numbers follow [Semantic Versioning](https://semver.org/).
